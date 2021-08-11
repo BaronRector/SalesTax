@@ -1,15 +1,12 @@
-﻿using SalesTax.Library.Abstraction;
-using SalesTax.Library.Enums;
-using SalesTax.Library.Interfaces;
-using System;
+﻿using SalesTax.Abstraction;
+using SalesTax.Enums;
+using SalesTax.Interfaces;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
 
-namespace SalesTax.UI.Models
+namespace SalesTax.Models
 {
-	class CartItem : INotifyPropertyChanged, ICartItem
+	public class CartItem : ICartItem
 	{
 		private readonly IEnumerable<TaxCalculator> _taxCalculators;
 		public CartItemType Type { get; set; }
@@ -30,7 +27,5 @@ namespace SalesTax.UI.Models
 		{
 			return _taxCalculators.Sum(x => x.GetTaxAmount(this));
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

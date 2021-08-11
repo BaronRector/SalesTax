@@ -1,7 +1,7 @@
-﻿using SalesTax.Library.Interfaces;
+﻿using SalesTax.Interfaces;
 using System;
 
-namespace SalesTax.Library.Abstraction
+namespace SalesTax.Abstraction
 {
 	public abstract class TaxCalculator
 	{
