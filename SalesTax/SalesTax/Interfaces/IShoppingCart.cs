@@ -6,6 +6,8 @@ namespace SalesTax.Interfaces
 	{
 		decimal GetTotalSale();
 		decimal GetTotalTax();
-		void ExportReceipt();
+		void AddItem(ICartItem cartItem);
+		void CreateCartItem();
+		string ExportReceipt();
 	}
 }

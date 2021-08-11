@@ -8,15 +8,15 @@ namespace SalesTax.Models
 {
 	public class CartItem : ICartItem
 	{
-		private readonly IEnumerable<TaxCalculator> _taxCalculators;
+		private readonly ITaxCalculator _taxCalculator;
 		public CartItemType Type { get; set; }
 		public string Name { get; set; }
 		public bool IsImported { get; set; }
 		public decimal Price { get; set; }
 
-		public CartItem(IEnumerable<TaxCalculator> taxCalculators, CartItemType type, string name, bool isImported, decimal price)
+		public CartItem(ITaxCalculator taxCalculator, CartItemType type, string name, bool isImported, decimal price)
 		{
-			_taxCalculators = taxCalculators;
+			_taxCalculator = taxCalculator;
 			Type = type;
 			Name = name;
 			IsImported = isImported;
@@ -25,7 +25,7 @@ namespace SalesTax.Models
 
 		public decimal GetSalesTax()
 		{
-			return _taxCalculators.Sum(x => x.GetTaxAmount(this));
+			return _taxCalculator.GetTaxAmount(this);
 		}
 	}
 }

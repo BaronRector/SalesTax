@@ -1,4 +1,5 @@
-﻿using SalesTax.Interfaces;
+﻿using SalesTax.Abstraction;
+using SalesTax.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,31 +10,15 @@ namespace SalesTax.Models
 {
 	public class ShoppingCart : IShoppingCart
 	{
-		private readonly IReceiptWriter _receiptWriter;
-		private readonly List<ICartItem> _cartItems = new List<ICartItem>();
+		public readonly List<ICartItem> cartItems = new List<ICartItem>();
 
-		public ShoppingCart(IReceiptWriter receiptWriter)
-		{
-			_receiptWriter = receiptWriter;
-		}
+		public ShoppingCart() { }
 
 		public void AddItem(ICartItem cartItem)
 		{
 			if (cartItem != null)
 			{
-				_cartItems.Add(cartItem);
-			}
-			else
-			{
-				throw new Exception("Cart item can't be empty");
-			}
-		}
-
-		public void RemoveItem(ICartItem cartItem)
-		{
-			if (cartItem != null)
-			{
-				_cartItems.Remove(cartItem);
+				cartItems.Add(cartItem);
 			}
 			else
 			{
@@ -43,21 +28,27 @@ namespace SalesTax.Models
 
 		public decimal GetTotalSale()
 		{
-			return _cartItems.Sum(x => x.Price);
+			return cartItems.Sum(x => x.Price);
 		}
 
 		public decimal GetTotalTax()
 		{
-			return _cartItems.Sum(x => x.GetSalesTax());
+			return cartItems.Sum(x => x.GetSalesTax());
+		}
+
+		public async void CreateCartItem()
+		{
+			Console.WriteLine("Scan cart item");
+			Console.WriteLine("Exit");
 		}
 
 		public string ExportReceipt()
 		{
 			var output = new StringBuilder();
 			var totalPrice = 0.0m;
-			var totalBasePrice = _cartItems.Sum(x => x.Price);
+			var totalBasePrice = cartItems.Sum(x => x.Price);
 
-			foreach (var shoppingCartItem in _cartItems)
+			foreach (var shoppingCartItem in cartItems)
 			{
 				var price = shoppingCartItem.Price + shoppingCartItem.GetSalesTax();
 				totalPrice += price;
@@ -68,11 +59,6 @@ namespace SalesTax.Models
 			output.AppendLine(String.Format("Total: {0}", totalPrice));
 
 			return output.ToString();
-		}
-
-		void IShoppingCart.ExportReceipt()
-		{
-			throw new NotImplementedException();
 		}
 	}
 }
