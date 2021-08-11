@@ -1,13 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SalesTax.Library.Abstraction;
 using SalesTax.Library.Interfaces;
 using SalesTax.Library.Models;
 using SalesTax.Library.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SalesTax
@@ -29,8 +24,9 @@ namespace SalesTax
 		{
 			services.AddScoped<IShoppingCart, ShoppingCart>();
 			services.AddScoped<IReceiptWriter, ReceiptWriter>();
-			services.AddScoped<ITaxCalculator, SalesTaxCalculator>();
-			services.AddScoped<ITaxCalculator, ImportTaxCalculator>();
+			services.AddScoped<ICartItem, CartItem>();
+			services.AddScoped<TaxCalculator, SalesTaxCalculator>();
+			services.AddScoped<TaxCalculator, ImportTaxCalculator>();
 			services.AddSingleton<MainWindow>();
 		}
 		private void OnStartup(object sender, StartupEventArgs e)

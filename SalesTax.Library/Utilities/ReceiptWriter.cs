@@ -10,7 +10,7 @@ namespace SalesTax.Library.Utilities
 {
 	public class ReceiptWriter : IReceiptWriter
 	{
-		public void ExportReceipt(ShoppingCart shoppingCart)
+		public void ExportReceipt(IShoppingCart shoppingCart)
 		{
 			throw new NotImplementedException();
 		}

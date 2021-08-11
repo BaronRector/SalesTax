@@ -4,6 +4,6 @@ namespace SalesTax.Library.Interfaces
 {
 	public interface IReceiptWriter
 	{
-		void ExportReceipt(ShoppingCart shoppingCart);
+		void ExportReceipt(IShoppingCart shoppingCart);
 	}
 }

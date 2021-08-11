@@ -10,14 +10,14 @@ namespace SalesTax.Library.Models
 	public class ShoppingCart : IShoppingCart
 	{
 		private readonly IReceiptWriter _receiptWriter;
-		private readonly List<CartItem> CartItems = new List<CartItem>();
+		private readonly List<ICartItem> CartItems = new List<ICartItem>();
 
 		public ShoppingCart(IReceiptWriter receiptWriter)
 		{
 			_receiptWriter = receiptWriter;
 		}
 
-		public void AddItem(CartItem cartItem)
+		public void AddItem(ICartItem cartItem)
 		{
 			if (cartItem != null)
 			{
@@ -29,7 +29,7 @@ namespace SalesTax.Library.Models
 			}
 		}
 
-		public void RemoveItem(CartItem cartItem)
+		public void RemoveItem(ICartItem cartItem)
 		{
 			if (cartItem != null)
 			{
