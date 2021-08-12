@@ -1,12 +1,9 @@
-﻿using SalesTax.Abstraction;
-using SalesTax.Enums;
+﻿using SalesTax.Enums;
 using SalesTax.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SalesTax.Models
 {
-	public class CartItem : ICartItem
+	class CartItem : ICartItem
 	{
 		private readonly ITaxCalculator _taxCalculator;
 		public CartItemType Type { get; set; }

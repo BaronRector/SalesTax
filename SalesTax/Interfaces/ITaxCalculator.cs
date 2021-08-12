@@ -1,7 +1,5 @@
-﻿using SalesTax.Interfaces;
-using System;
-
-namespace SalesTax.Abstraction
+﻿
+namespace SalesTax.Interfaces
 {
 	public interface ITaxCalculator
 	{

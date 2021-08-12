@@ -1,6 +1,6 @@
-﻿using SalesTax.Library.Enums;
+﻿using SalesTax.Enums;
 
-namespace SalesTax.Library.Interfaces
+namespace SalesTax.Interfaces
 {
 	public interface ICartItem
 	{
