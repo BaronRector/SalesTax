@@ -107,7 +107,7 @@ namespace SalesTax.Models
 				var itemCount = cartItemGroup.Count();
 				output.AppendLine($"{(cartItemGroup.Key.IsImported ? $"Imported " : "")}" +
 						$"{cartItemGroup.First().Name}: {totalPrice}" +
-						$" {(itemCount > 1 ? $"({itemCount} @ {totalPrice / itemCount})" : "")}");
+						$"{(itemCount > 1 ? $" ({itemCount} @ {totalPrice / itemCount})" : "")}");
 			}
 			output.AppendLine();
 			output.AppendLine($"Sales Taxes: {totalTax}");

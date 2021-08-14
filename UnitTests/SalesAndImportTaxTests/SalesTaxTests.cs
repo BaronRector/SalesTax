@@ -5,7 +5,7 @@ using SalesTax.Utilities;
 namespace UnitTests.SalesAndImportTaxTests
 {
 	[TestFixture]
-	public class SalesTaxTests
+	public class SalesAndImportTaxTests
 	{
 		protected TaxCalculator _taxCalculator;
 		protected CartItem _cartItem;

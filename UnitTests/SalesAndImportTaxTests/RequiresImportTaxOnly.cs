@@ -6,7 +6,7 @@ using System.Text;
 namespace UnitTests.SalesAndImportTaxTests
 {
 	[TestFixture]
-	class RequiresImportTaxOnly : SalesTaxTests
+	class RequiresImportTaxOnly : SalesAndImportTaxTests
 	{
 		[SetUp]
 		public void InitItem()
