@@ -3,7 +3,7 @@ using SalesTax.Interfaces;
 
 namespace SalesTax.Models
 {
-	class CartItem : ICartItem
+	public class CartItem : ICartItem
 	{
 		private readonly ITaxCalculator _taxCalculator;
 		public CartItemType Type { get; set; }
