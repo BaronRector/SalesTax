@@ -1,18 +1,14 @@
 ﻿using NUnit.Framework;
 using SalesTax.Models;
 using SalesTax.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace UnitTests.ReceiptCalulations
+namespace UnitTests.ShoppingCartTests
 {
 	[TestFixture]
-	public class ReceiptCalulations
+	public class ShoppingCartTests
 	{
 		protected TaxCalculator _taxCalculator;
 		protected ShoppingCart _shoppingCart;
-		protected List<CartItem> _cartItems;
 
 		[SetUp]
 		public void Init()

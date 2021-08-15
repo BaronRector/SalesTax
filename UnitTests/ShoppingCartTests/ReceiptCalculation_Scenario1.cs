@@ -1,13 +1,11 @@
 ﻿using NUnit.Framework;
 using SalesTax.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace UnitTests.ReceiptCalulations
+namespace UnitTests.ShoppingCartTests
 {
 	[TestFixture]
-	class ReceiptCalculation_Scenario1 : ReceiptCalulations
+	class ReceiptCalculation_Scenario1 : ShoppingCartTests
 	{
 		[SetUp]
 		public void InitShoppingCart()
@@ -23,6 +21,22 @@ namespace UnitTests.ReceiptCalulations
 		{
 			var actual = _shoppingCart.ExportReceipt();
 			Assert.AreEqual(Expected, actual);
+		}
+
+		[Test]
+		public void GetTotalSale()
+		{
+			var actual = _shoppingCart.GetTotalSale();
+			var expected = 40.82m;
+			Assert.AreEqual(expected, actual);
+		}
+
+		[Test]
+		public void GetTotalTax()
+		{
+			var actual = _shoppingCart.GetTotalTax();
+			var expected = 1.50m;
+			Assert.AreEqual(expected, actual);
 		}
 
 		private string Expected = $"Book: 24.98 (2 @ 12.49){Environment.NewLine}" +

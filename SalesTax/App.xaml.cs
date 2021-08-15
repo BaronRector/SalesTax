@@ -2,6 +2,7 @@
 using SalesTax.Interfaces;
 using SalesTax.Models;
 using SalesTax.Utilities;
+using System;
 using System.Windows;
 
 namespace SalesTax
@@ -26,6 +27,12 @@ namespace SalesTax
 		{
 			var mainWindow = serviceProvider.GetService<MainWindow>();
 			mainWindow.Show();
+		}
+
+		private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+		{
+			MessageBox.Show($"An error has occured: {Environment.NewLine}{e.Exception.Message}" , "Sales Tax App Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+			e.Handled = true;
 		}
 	}
 }
