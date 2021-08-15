@@ -88,7 +88,7 @@ namespace SalesTax.Models
 			{
 				return _clearCartCommand ?? (_clearCartCommand = new CommandHandler(() =>
 				{
-					CartItems.Clear();
+					CartItems?.Clear();
 					OnPropertyChanged("CartItems");
 					OnPropertyChanged(propertyName: "PrintReceipt");
 				}, () => ClearCartCanExecute));
@@ -99,7 +99,7 @@ namespace SalesTax.Models
 		{
 			get
 			{
-				return CartItems.Count > 0;
+				return CartItems?.Count > 0;
 			}
 		}
 
@@ -114,63 +114,91 @@ namespace SalesTax.Models
 
 		public void AddItem(ICartItem cartItem)
 		{
-			if (cartItem == null)
+			try
 			{
-				throw new Exception("Cart item cannot be empty");
+				if (cartItem == null)
+				{
+					throw new Exception("Cart item cannot be empty");
+				}
+				else if (cartItem?.Price < 0)
+				{
+					throw new Exception("Cart item price cannot be negative");
+				}
+				else if (string.IsNullOrEmpty(cartItem.Name?.Trim()))
+				{
+					throw new Exception("Cart item name cannot be empty");
+				}
+
+				cartItem.Price = decimal.Round(cartItem.Price, 2, MidpointRounding.AwayFromZero);
+				CartItems?.Add(cartItem);
+
+				ItemType = null;
+				Name = null;
+				IsImported = false;
+				Price = default;
+
+				OnPropertyChanged();
+				OnPropertyChanged(propertyName: "PrintReceipt");
 			}
-			else if (cartItem?.Price < 0)
+			catch
 			{
-				throw new Exception("Cart item price cannot be negative");
+				throw;
 			}
-			else if (string.IsNullOrEmpty(cartItem.Name?.Trim()))
-			{
-				throw new Exception("Cart item name cannot be empty");
-			}
-
-			cartItem.Price = decimal.Round(cartItem.Price, 2, MidpointRounding.AwayFromZero);
-			CartItems.Add(cartItem);
-
-			ItemType = null;
-			Name = null;
-			IsImported = false;
-			Price = default;
-
-			OnPropertyChanged();
-			OnPropertyChanged(propertyName: "PrintReceipt");
 		}
 
 		public decimal GetTotalSale()
 		{
-			return CartItems.Sum(x => x.Price);
+			try
+			{
+				return CartItems.Sum(x => x.Price);
+			}
+			catch
+			{
+				throw;
+			}
 		}
 
 		public decimal GetTotalTax()
 		{
-			return CartItems.Sum(x => x.GetSalesTax());
+			try
+			{
+				return CartItems.Sum(x => x.GetSalesTax());
+			}
+			catch
+			{
+				throw;
+			}
 		}
 
 		public string ExportReceipt()
 		{
-			var output = new StringBuilder();
-			var totalTax = GetTotalTax();
-			var totalSalePrice = GetTotalSale();
-
-			if (CartItems.Count == 0)
-				return "";
-
-			foreach (var cartItemGroup in CartItems.GroupBy(x => new { Name = x.Name.ToUpper().Trim(), x.Price, x.IsImported, x.Type}))
+			try
 			{
-				var totalPrice = cartItemGroup.Sum(x => x.Price) + cartItemGroup.Sum(x => x.GetSalesTax());
-				var itemCount = cartItemGroup.Count();
-				output.AppendLine($"{(cartItemGroup.Key.IsImported ? $"Imported " : "")}" +
-						$"{cartItemGroup.First().Name}: {totalPrice}" +
-						$"{(itemCount > 1 ? $" ({itemCount} @ {totalPrice / itemCount})" : "")}");
-			}
-			output.AppendLine();
-			output.AppendLine($"Sales Taxes: {totalTax}");
-			output.AppendLine($"Total: {totalSalePrice + totalTax}");
+				var output = new StringBuilder();
+				var totalTax = GetTotalTax();
+				var totalSalePrice = GetTotalSale();
 
-			return output.ToString();
+				if (CartItems.Count == 0)
+					return "";
+
+				foreach (var cartItemGroup in CartItems.GroupBy(x => new { Name = x.Name.ToUpper().Trim(), x.Price, x.IsImported, x.Type }))
+				{
+					var totalPrice = cartItemGroup.Sum(x => x.Price) + cartItemGroup.Sum(x => x.GetSalesTax());
+					var itemCount = cartItemGroup.Count();
+					output.AppendLine($"{(cartItemGroup.Key.IsImported ? $"Imported " : "")}" +
+							$"{cartItemGroup.First().Name}: {totalPrice}" +
+							$"{(itemCount > 1 ? $" ({itemCount} @ {totalPrice / itemCount})" : "")}");
+				}
+				output.AppendLine();
+				output.AppendLine($"Sales Taxes: {totalTax}");
+				output.AppendLine($"Total: {totalSalePrice + totalTax}");
+
+				return output.ToString();
+			}
+			catch
+			{
+				throw;
+			}
 		}
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
