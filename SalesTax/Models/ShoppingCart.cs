@@ -16,8 +16,6 @@ namespace SalesTax.Models
 		private readonly ITaxCalculator _taxCalculator;
 		public ObservableCollection<ICartItem> CartItems { get; private set; } = new ObservableCollection<ICartItem>();
 
-		private string test { get; set; }
-
 		private string _name;
 		public string Name
 		{
@@ -129,6 +127,7 @@ namespace SalesTax.Models
 				throw new Exception("Cart item name cannot be empty");
 			}
 
+			cartItem.Price = decimal.Round(cartItem.Price, 2, MidpointRounding.AwayFromZero);
 			CartItems.Add(cartItem);
 
 			ItemType = null;
