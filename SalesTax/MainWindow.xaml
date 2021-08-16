@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SalesTax"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="MainWindow"
+        Title="Sales Tax Coding Test"
         ResizeMode="NoResize"
         Height="650"
         Width="1250"
